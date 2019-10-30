@@ -218,7 +218,8 @@ def create_model(new_shape):
 A function that creates the model, it takes the input shape and returns a model
     """
     model = Sequential()
-    # Conv layer 1
+
+
     model.add(Convolution3D(
         input_shape = new_shape[1:],
         filters=64,
@@ -226,11 +227,9 @@ A function that creates the model, it takes the input shape and returns a model
         data_format='channels_first',
     ))
 
-    #model.add(LeakyReLU(alpha = 0.1))
 
-    # Dropout 1
     model.add(Dropout(0.2))
-    # Conv layer 2
+
     model.add(Convolution3D(
         filters=64,
         kernel_size=3,
@@ -238,30 +237,25 @@ A function that creates the model, it takes the input shape and returns a model
         data_format='channels_first',
     ))
 
-    #model.add(LeakyReLU(alpha = 0.1))
 
-    # Maxpooling 1
     model.add(MaxPooling3D(
         pool_size=(2,2,2),
         strides=None,
         padding='valid',    
         data_format='channels_first'
     ))
-    # Dropout 2
+
     model.add(Dropout(0.4))
-    # FC 1
+
     model.add(Flatten())
+
     model.add(Dense(128))
 
-    #model.add(LeakyReLU(alpha = 0.1))
-    # Dropout 3
     model.add(Dropout(0.4))
-    # Fully connected layer 2 to shape (2) for 2 classes
 
     model.add(Dense(3))
+
     model.add(Activation('softmax'))
-
-
 
     return model
 
